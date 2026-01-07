@@ -12,6 +12,7 @@
             --accent-yellow: #f1c40f;
             --text-main: #333;
             --text-sub: #888;
+            --blue-active: #3b82f6;
             --card-bg: #ffffff;
             --border-radius: 16px;
         }
@@ -20,7 +21,8 @@
             font-family: sans-serif;
             background-color: var(--bg-color);
             margin: 0; padding: 15px; color: var(--text-main);
-            padding-bottom: 80px;
+            padding-bottom: 100px;
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* --- UI Components --- */
@@ -32,61 +34,75 @@
         .btn-add { background: var(--primary-orange); color: white; padding: 0 15px; border-radius: 10px; border: none; font-weight: bold; height: 40px; cursor: pointer; }
 
         /* Goal Card */
-        .goal-card { background: #e8f8f0; padding: 15px; border-radius: var(--border-radius); margin-bottom: 15px; }
+        .goal-card { background: #e8f8f0; padding: 15px; border-radius: var(--border-radius); margin-bottom: 15px; cursor: pointer; }
         .goal-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #2d5a27; }
         .progress-bg { background: white; height: 10px; border-radius: 5px; overflow: hidden; }
         .progress-fill { background: #82e9a8; height: 100%; transition: width 0.3s; }
 
         /* Stats Grid */
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 10px; }
         .stats-sub { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .stat-box { background: white; padding: 12px; border-radius: var(--border-radius); text-align: center; }
         .stat-num { display: block; font-size: 20px; font-weight: bold; }
         .stat-label { font-size: 11px; color: var(--text-sub); }
 
-        /* Tabs & Search */
-        .search-bar { width: 100%; padding: 12px; border: 1.5px solid #ddd; border-radius: 12px; box-sizing: border-box; margin-bottom: 15px; }
+        /* Search & Sort */
+        .search-bar { width: 100%; padding: 12px; border: 1.5px solid #ddd; border-radius: 12px; box-sizing: border-box; margin-bottom: 15px; font-size: 16px; }
         .search-bar:focus { border-color: var(--accent-yellow); outline: none; }
         
-        .sort-trigger { width: 100%; padding: 12px; background: #eee; border-radius: 12px; border: none; text-align: left; margin-bottom: 15px; position: relative; cursor: pointer; }
+        .sort-trigger { width: 100%; padding: 12px; background: #eee; border-radius: 12px; border: 1.5px solid transparent; text-align: left; margin-bottom: 15px; position: relative; cursor: pointer; font-size: 14px; }
         .sort-trigger::after { content: '▼'; position: absolute; right: 15px; font-size: 12px; color: #666; }
+        .sort-active-border { border-color: var(--blue-active); background: #f0f7ff; }
 
-        .category-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; white-space: nowrap; }
+        .category-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; white-space: nowrap; -webkit-overflow-scrolling: touch; }
         .tab { padding: 8px 16px; background: white; border-radius: 20px; border: 1px solid #eee; font-size: 13px; cursor: pointer; }
         .tab.active { background: var(--primary-orange); color: white; border-color: var(--primary-orange); }
 
-        /* Book Grid */
+        /* Book Card */
         .book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .book-card { background: white; border-radius: var(--border-radius); overflow: hidden; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .book-cover-placeholder { height: 150px; background: #eaecf0; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #adb5bd; }
+        .book-card { background: white; border-radius: var(--border-radius); overflow: hidden; position: relative; box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: pointer; }
+        .book-cover-placeholder { height: 160px; background: #eaecf0; display: flex; align-items: center; justify-content: center; font-size: 50px; color: #adb5bd; }
         .book-info { padding: 10px; }
         .book-tag { font-size: 10px; background: #fff3e0; color: #e67e22; padding: 2px 6px; border-radius: 10px; }
-        .book-title { font-size: 13px; font-weight: bold; margin: 5px 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .book-title { font-size: 13px; font-weight: bold; margin: 5px 0; min-height: 2.6em; line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
         .book-author { font-size: 11px; color: var(--text-sub); }
-        .book-status-select { width: 100%; margin-top: 8px; padding: 5px; border-radius: 8px; border: 1px solid #ddd; font-size: 12px; }
-        .delete-btn { position: absolute; top: 10px; right: 10px; background: white; color: #e74c3c; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; box-shadow: 0 2px 5px rgba(0,0,0,0.2); cursor: pointer; }
+        .book-status-select { width: 100%; margin-top: 8px; padding: 6px; border-radius: 8px; border: 1px solid #ddd; background: #f9f9f9; font-size: 12px; }
+        .delete-icon { position: absolute; top: 10px; right: 10px; background: white; color: #e74c3c; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid #eee; z-index: 10; cursor: pointer; }
 
-        /* Modals */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
-        .modal { background: white; width: 90%; max-width: 400px; border-radius: 20px; padding: 20px; position: relative; max-height: 85vh; overflow-y: auto; }
-        .modal-title { font-weight: bold; font-size: 18px; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; }
+        /* --- Modals --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal { background: white; width: 90%; max-width: 400px; border-radius: 24px; padding: 25px; position: relative; max-height: 90vh; overflow-y: auto; }
+        .modal-title { font-weight: bold; font-size: 20px; margin-bottom: 20px; text-align: left; }
+        
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 8px; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid #eee; box-sizing: border-box; font-size: 16px; }
         .form-group input:focus { border-color: var(--accent-yellow); outline: none; }
         
-        .segmented-control { display: flex; gap: 5px; background: #f0f0f0; padding: 4px; border-radius: 12px; }
-        .segment { flex: 1; text-align: center; padding: 10px; border-radius: 8px; font-size: 12px; cursor: pointer; }
-        .segment.active { background: #3b82f6; color: white; }
+        /* Segmented Control (Status Buttons) */
+        .segmented-control { display: flex; gap: 8px; background: #f5f5f5; padding: 5px; border-radius: 15px; }
+        .segment { flex: 1; text-align: center; padding: 12px; border-radius: 12px; font-size: 14px; font-weight: bold; cursor: pointer; color: #666; transition: 0.2s; }
+        .segment.active { background: var(--blue-active); color: white; }
 
-        .modal-footer { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-confirm { flex: 2; background: var(--primary-orange); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; }
-        .btn-cancel { flex: 1; background: #eee; border: none; padding: 12px; border-radius: 12px; }
-        .btn-save-green { width: 100%; background: var(--primary-green); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; }
+        /* Sort Options */
+        .sort-option { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; border-bottom: 1px solid #eee; cursor: pointer; font-size: 16px; }
+        .sort-option:last-child { border-bottom: none; }
+        .radio-circle { width: 22px; height: 22px; border: 2px solid #ddd; border-radius: 50%; position: relative; }
+        .sort-option.active .radio-circle { border-color: var(--primary-green); }
+        .sort-option.active .radio-circle::after { content: ''; position: absolute; width: 12px; height: 12px; background: var(--primary-green); border-radius: 50%; top: 5px; left: 5px; }
 
-        /* Star Rating */
-        .stars { display: flex; gap: 5px; font-size: 30px; color: #ddd; cursor: pointer; margin: 10px 0; }
-        .stars .active { color: #f1c40f; }
+        /* Detail Modal Specific */
+        .detail-box { background: #f8faff; padding: 20px; border-radius: 15px; margin-bottom: 20px; }
+        .detail-title-large { font-size: 18px; font-weight: bold; margin-bottom: 10px; color: var(--text-main); }
+        .stars { display: flex; gap: 8px; margin: 15px 0; font-size: 32px; color: #ddd; }
+        .stars span.active { color: var(--accent-yellow); }
+        .fav-row { display: flex; align-items: center; gap: 10px; background: #fff; padding: 12px; border-radius: 12px; border: 1px solid #eee; cursor: pointer; }
+        .fav-row input { width: auto; }
+
+        .modal-footer { display: flex; gap: 12px; margin-top: 25px; }
+        .btn-confirm { flex: 2; background: var(--primary-orange); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .btn-cancel { flex: 1; background: #eee; border: none; padding: 15px; border-radius: 15px; font-weight: bold; cursor: pointer; }
+        .btn-save-green { width: 100%; background: var(--primary-green); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: bold; font-size: 16px; cursor: pointer; }
 
     </style>
 </head>
@@ -95,13 +111,13 @@
 <div class="header">
     <h1>読書記録</h1>
     <div class="header-btns">
-        <button class="btn-icon" onclick="openModal('modal-goal')" style="color:var(--primary-green)">🎯</button>
+        <button class="btn-icon" id="open-goal-btn" style="color:var(--primary-green)">🎯</button>
         <button class="btn-icon" style="color: #9b59b6;">↓</button>
-        <button class="btn-add" onclick="openModal('modal-add')">＋ 追加</button>
+        <button class="btn-add" id="open-add-btn">＋ 追加</button>
     </div>
 </div>
 
-<div class="goal-card" onclick="openModal('modal-goal')">
+<div class="goal-card" id="goal-card-trigger">
     <div class="goal-header">
         <span>🎯 年間目標: <span id="display-target">100</span>冊</span>
         <span id="display-progress-text">0/100 (0%)</span>
@@ -119,17 +135,17 @@
     <div class="stat-box" style="background:#fff0f5"><span class="stat-num" id="stat-fav" style="color:#e91e63">0</span><span class="stat-label">お気に入り</span></div>
 </div>
 
-<input type="text" class="search-bar" placeholder="タイトルや著者で検索..." oninput="renderBooks()">
+<input type="text" class="search-bar" id="search-input" placeholder="タイトルや著者で検索...">
 
-<button class="sort-trigger" id="sort-label" onclick="openModal('modal-sort')">登録日順</button>
+<button class="sort-trigger" id="sort-trigger">登録日順</button>
 
 <div class="category-tabs" id="category-tabs">
-    <div class="tab active" onclick="setCategory('全て')">全て</div>
-    <div class="tab" onclick="setCategory('小説')">小説</div>
-    <div class="tab" onclick="setCategory('ビジネス')">ビジネス</div>
-    <div class="tab" onclick="setCategory('技術書')">技術書</div>
-    <div class="tab" onclick="setCategory('エッセイ')">エッセイ</div>
-    <div class="tab" onclick="setCategory('その他')">その他</div>
+    <div class="tab active">全て</div>
+    <div class="tab">小説</div>
+    <div class="tab">ビジネス</div>
+    <div class="tab">技術書</div>
+    <div class="tab">エッセイ</div>
+    <div class="tab">その他</div>
     <div class="tab">+ 追加</div>
 </div>
 
@@ -160,7 +176,7 @@
         </div>
         <div class="form-group">
             <label>ステータス</label>
-            <div class="segmented-control" id="add-status">
+            <div class="segmented-control" id="add-status-segments">
                 <div class="segment active" data-val="reading">読書中</div>
                 <div class="segment" data-val="want">読みたい</div>
                 <div class="segment" data-val="read">読了</div>
@@ -171,8 +187,8 @@
             <input type="text" id="add-image" placeholder="スキップしてもOK">
         </div>
         <div class="modal-footer">
-            <button class="btn-confirm" onclick="saveBook()">追加</button>
-            <button class="btn-cancel" onclick="closeModal()">キャンセル</button>
+            <button class="btn-confirm" id="save-book-btn">追加</button>
+            <button class="btn-cancel" onclick="closeAllModals()">キャンセル</button>
         </div>
     </div>
 </div>
@@ -181,20 +197,18 @@
     <div class="modal" style="text-align:center">
         <div class="modal-title">年間目標</div>
         <div class="form-group">
-            <input type="number" id="input-goal" value="100" style="text-align:center; font-size:20px">
+            <input type="number" id="input-goal" value="100" style="text-align:center; font-size:24px; font-weight:bold">
         </div>
-        <button class="btn-save-green" onclick="saveGoal()">保存</button>
+        <button class="btn-save-green" id="save-goal-btn">保存</button>
     </div>
 </div>
 
 <div id="modal-sort" class="modal-overlay">
     <div class="modal">
-        <div class="form-group" style="margin:0">
-            <div style="padding:15px 0; border-bottom:1px solid #eee; display:flex; justify-content:space-between" onclick="setSort('登録日順')">登録日順 <span id="check-date">●</span></div>
-            <div style="padding:15px 0; border-bottom:1px solid #eee; display:flex; justify-content:space-between" onclick="setSort('タイトル順')">タイトル順 <span id="check-title"></span></div>
-            <div style="padding:15px 0; border-bottom:1px solid #eee; display:flex; justify-content:space-between" onclick="setSort('著者順')">著者順 <span id="check-author"></span></div>
-            <div style="padding:15px 0; display:flex; justify-content:space-between" onclick="setSort('評価順')">評価順 <span id="check-rating"></span></div>
-        </div>
+        <div class="sort-option" data-sort="登録日順"><span>登録日順</span><div class="radio-circle"></div></div>
+        <div class="sort-option" data-sort="タイトル順"><span>タイトル順</span><div class="radio-circle"></div></div>
+        <div class="sort-option" data-sort="著者順"><span>著者順</span><div class="radio-circle"></div></div>
+        <div class="sort-option" data-sort="評価順"><span>評価順</span><div class="radio-circle"></div></div>
     </div>
 </div>
 
@@ -202,15 +216,15 @@
     <div class="modal">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px">
             <div id="detail-header-title" style="font-weight:bold; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; width:70%"></div>
-            <div>
-                <button class="btn-icon" style="display:inline-block; font-size:14px">✎</button>
-                <button class="btn-icon" onclick="closeModal()" style="display:inline-block; font-size:14px">✕</button>
+            <div style="display:flex; gap:10px">
+                <button class="btn-icon" style="font-size:16px">✎</button>
+                <button class="btn-icon" onclick="closeAllModals()" style="font-size:16px">✕</button>
             </div>
         </div>
-        <div style="background:#f8f9fa; padding:15px; border-radius:15px; margin-bottom:15px">
-            <h3 id="detail-title" style="margin:0 0 10px 0"></h3>
-            <div style="font-size:13px; color:#555; line-height:1.8">
-                <div>著者: <span id="detail-author"></span></div>
+        <div class="detail-box">
+            <div class="detail-title-large" id="detail-title"></div>
+            <div style="font-size:14px; color:#555; line-height:1.8">
+                <div>著者: <span id="detail-author" style="font-weight:bold"></span></div>
                 <div>ページ数: <span id="detail-pages"></span></div>
                 <div>カテゴリ: <span id="detail-category"></span></div>
                 <div>ステータス: <span id="detail-status"></span></div>
@@ -220,170 +234,169 @@
         <div class="stars" id="detail-stars">
             <span data-idx="1">★</span><span data-idx="2">★</span><span data-idx="3">★</span><span data-idx="4">★</span><span data-idx="5">★</span>
         </div>
-        <div style="background:#f8f9fa; padding:10px; border-radius:10px; margin-bottom:15px; display:flex; align-items:center; gap:10px">
-            <input type="checkbox" id="detail-fav"> <span style="font-size:20px">♡</span> お気に入り
+        <div class="fav-row" id="fav-toggle-area">
+            <input type="checkbox" id="detail-fav-check"> <span style="font-size:18px">♡</span> お気に入りに追加
         </div>
-        <label style="font-size:13px; font-weight:bold">メモ・感想</label>
-        <textarea id="detail-memo" rows="4" style="width:100%; border-radius:12px; border:1px solid #eee; padding:10px; margin-top:5px" placeholder="この本の感想やメモを書く..."></textarea>
-        <button class="btn-save-green" style="margin-top:15px" onclick="saveDetail()">保存</button>
+        <div class="form-group" style="margin-top:20px">
+            <label>メモ・感想</label>
+            <textarea id="detail-memo" rows="4" placeholder="この本の感想やメモを書く..."></textarea>
+        </div>
+        <button class="btn-save-green" id="save-detail-btn">保存</button>
     </div>
 </div>
 
 <script>
-    let books = JSON.parse(localStorage.getItem('books_v2')) || [];
-    let goal = localStorage.getItem('goal_v2') || 100;
-    let currentCategory = '全て';
-    let currentSort = '登録日順';
-    let editingId = null;
-
-    // 初期化
-    window.onload = () => {
-        updateDashboard();
-        renderBooks();
-        setupSegments();
+    // --- 状態管理 ---
+    let state = {
+        books: JSON.parse(localStorage.getItem('books_v3')) || [],
+        goal: parseInt(localStorage.getItem('goal_v3')) || 100,
+        filter: '全て',
+        sort: '登録日順',
+        editingId: null
     };
 
-    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-    function closeModal() { 
-        document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); 
-    }
+    // --- セレクタ ---
+    const $ = id => document.getElementById(id);
 
-    // ステータス選択（セグメント）の挙動
-    function setupSegments() {
-        document.querySelectorAll('.segment').forEach(seg => {
-            seg.addEventListener('click', function() {
-                this.parentElement.querySelectorAll('.segment').forEach(s => s.classList.remove('active'));
-                this.classList.add('active');
-            });
+    // --- 初期化 ---
+    document.addEventListener('DOMContentLoaded', () => {
+        initEvents();
+        refreshUI();
+    });
+
+    function initEvents() {
+        // ボタン類
+        $('open-add-btn').onclick = () => openModal('modal-add');
+        $('open-goal-btn').onclick = () => openModal('modal-goal');
+        $('goal-card-trigger').onclick = () => openModal('modal-goal');
+        $('sort-trigger').onclick = () => openModal('modal-sort');
+        
+        // 保存処理
+        $('save-book-btn').onclick = saveNewBook;
+        $('save-goal-btn').onclick = saveGoal;
+        $('save-detail-btn').onclick = saveDetailChanges;
+
+        // 検索
+        $('search-input').oninput = refreshUI;
+
+        // モーダル外タップで閉じる
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.onclick = (e) => { if(e.target === overlay) closeAllModals(); };
+        });
+
+        // ステータスセグメント切り替え
+        document.querySelectorAll('#add-status-segments .segment').forEach(seg => {
+            seg.onclick = () => {
+                document.querySelectorAll('#add-status-segments .segment').forEach(s => s.classList.remove('active'));
+                seg.classList.add('active');
+            };
+        });
+
+        // ソート選択
+        document.querySelectorAll('.sort-option').forEach(opt => {
+            opt.onclick = () => {
+                state.sort = opt.dataset.sort;
+                $('sort-trigger').innerText = state.sort;
+                $('sort-trigger').classList.add('sort-active-border');
+                closeAllModals();
+                refreshUI();
+            };
+        });
+
+        // カテゴリタブ
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.onclick = () => {
+                if(tab.innerText === '+ 追加') return;
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                state.filter = tab.innerText;
+                refreshUI();
+            };
+        });
+
+        // 星評価
+        document.querySelectorAll('#detail-stars span').forEach((star, i) => {
+            star.onclick = () => setStarRating(i + 1);
         });
     }
 
+    // --- ロジック ---
+
+    function openModal(id) { $(id).style.display = 'flex'; }
+    function closeAllModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+
     function saveGoal() {
-        goal = document.getElementById('input-goal').value;
-        localStorage.setItem('goal_v2', goal);
-        updateDashboard();
-        closeModal();
+        state.goal = parseInt($('input-goal').value) || 100;
+        localStorage.setItem('goal_v3', state.goal);
+        closeAllModals();
+        refreshUI();
     }
 
-    function saveBook() {
-        const title = document.getElementById('add-title').value;
-        const author = document.getElementById('add-author').value;
-        if(!title || !author) return alert("タイトルと著者は必須です");
+    function saveNewBook() {
+        const title = $('add-title').value;
+        const author = $('add-author').value;
+        if(!title || !author) { alert("タイトルと著者は必須です"); return; }
 
         const newBook = {
             id: Date.now(),
-            title,
-            author,
-            pages: document.getElementById('add-pages').value || 0,
-            category: document.getElementById('add-category').value,
-            status: document.querySelector('#add-status .active').dataset.val,
-            image: document.getElementById('add-image').value,
+            title, author,
+            pages: $('add-pages').value || 0,
+            category: $('add-category').value,
+            status: document.querySelector('#add-status-segments .segment.active').dataset.val,
+            image: $('add-image').value,
             rating: 0,
             isFavorite: false,
             memo: '',
             createdAt: new Date().toISOString()
         };
 
-        books.push(newBook);
-        saveAndRefresh();
-        closeModal();
-        // Clear inputs
-        document.getElementById('add-title').value = '';
-        document.getElementById('add-author').value = '';
+        state.books.push(newBook);
+        saveToStorage();
+        closeAllModals();
+        clearAddForm();
+        refreshUI();
     }
 
-    function saveAndRefresh() {
-        localStorage.setItem('books_v2', JSON.stringify(books));
-        updateDashboard();
-        renderBooks();
+    function saveToStorage() {
+        localStorage.setItem('books_v3', JSON.stringify(state.books));
     }
 
-    function updateDashboard() {
-        const readCount = books.filter(b => b.status === 'read').length;
-        document.getElementById('display-target').innerText = goal;
-        document.getElementById('stat-read').innerText = readCount;
-        document.getElementById('stat-reading').innerText = books.filter(b => b.status === 'reading').length;
-        document.getElementById('stat-want').innerText = books.filter(b => b.status === 'want').length;
-        document.getElementById('stat-pages').innerText = books.reduce((sum, b) => sum + Number(b.pages), 0);
-        document.getElementById('stat-fav').innerText = books.filter(b => b.isFavorite).length;
-
-        const percent = Math.min(Math.round((readCount / goal) * 100), 100);
-        document.getElementById('display-progress-fill').style.width = percent + '%';
-        document.getElementById('display-progress-text').innerText = `${readCount}/${goal} (${percent}%)`;
+    function clearAddForm() {
+        $('add-title').value = ''; $('add-author').value = ''; $('add-pages').value = ''; $('add-image').value = '';
     }
 
-    function setCategory(cat) {
-        currentCategory = cat;
-        document.querySelectorAll('.tab').forEach(t => {
-            t.classList.toggle('active', t.innerText === cat);
+    function refreshUI() {
+        updateStats();
+        renderBookList();
+        updateSortUI();
+    }
+
+    function updateStats() {
+        const readCount = state.books.filter(b => b.status === 'read').length;
+        $('display-target').innerText = state.goal;
+        $('stat-read').innerText = readCount;
+        $('stat-reading').innerText = state.books.filter(b => b.status === 'reading').length;
+        $('stat-want').innerText = state.books.filter(b => b.status === 'want').length;
+        $('stat-pages').innerText = state.books.reduce((sum, b) => sum + Number(b.pages), 0);
+        $('stat-fav').innerText = state.books.filter(b => b.isFavorite).length;
+
+        const percent = Math.min(Math.round((readCount / state.goal) * 100), 100);
+        $('display-progress-fill').style.width = percent + '%';
+        $('display-progress-text').innerText = `${readCount}/${state.goal} (${percent}%)`;
+    }
+
+    function updateSortUI() {
+        document.querySelectorAll('.sort-option').forEach(opt => {
+            opt.classList.toggle('active', opt.dataset.sort === state.sort);
         });
-        renderBooks();
     }
 
-    function setSort(type) {
-        currentSort = type;
-        document.getElementById('sort-label').innerText = type;
-        renderBooks();
-        closeModal();
-    }
-
-    function renderBooks() {
-        const grid = document.getElementById('book-grid');
-        const query = document.querySelector('.search-bar').value.toLowerCase();
+    function renderBookList() {
+        const grid = $('book-grid');
+        const query = $('search-input').value.toLowerCase();
         grid.innerHTML = '';
 
-        let filtered = books.filter(b => {
-            const matchCat = (currentCategory === '全て' || b.category === currentCategory);
+        let filtered = state.books.filter(b => {
+            const matchCat = (state.filter === '全て' || b.category === state.filter);
             const matchSearch = (b.title.toLowerCase().includes(query) || b.author.toLowerCase().includes(query));
-            return matchCat && matchSearch;
-        });
-
-        // Sorting
-        if(currentSort === 'タイトル順') filtered.sort((a,b) => a.title.localeCompare(b.title));
-        else if(currentSort === '著者順') filtered.sort((a,b) => a.author.localeCompare(b.author));
-        else if(currentSort === '評価順') filtered.sort((a,b) => b.rating - a.rating);
-        else filtered.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
-
-        filtered.forEach(book => {
-            const card = document.createElement('div');
-            card.className = 'book-card';
-            card.onclick = () => openDetail(book.id);
-            card.innerHTML = `
-                <button class="delete-btn" onclick="deleteBook(event, ${book.id})">🗑</button>
-                <div class="book-cover-placeholder">${book.image ? `<img src="${book.image}" style="width:100%;height:100%;object-fit:cover">` : '📖'}</div>
-                <div class="book-info">
-                    <span class="book-tag">${book.category}</span> <span style="font-size:10px">⭐ ${book.rating}</span>
-                    <div class="book-title">${book.title}</div>
-                    <div class="book-author">${book.author}</div>
-                    <select class="book-status-select" onclick="event.stopPropagation()" onchange="updateStatus(${book.id}, this.value)">
-                        <option value="reading" ${book.status==='reading'?'selected':''}>読書中</option>
-                        <option value="want" ${book.status==='want'?'selected':''}>読みたい</option>
-                        <option value="read" ${book.status==='read'?'selected':''}>読了</option>
-                    </select>
-                </div>
-            `;
-            grid.appendChild(card);
-        });
-    }
-
-    function deleteBook(e, id) {
-        e.stopPropagation();
-        if(confirm("削除しますか？")) {
-            books = books.filter(b => b.id !== id);
-            saveAndRefresh();
-        }
-    }
-
-    function updateStatus(id, newStatus) {
-        const book = books.find(b => b.id === id);
-        book.status = newStatus;
-        saveAndRefresh();
-    }
-
-    // 詳細画面の処理
-    function openDetail(id) {
-        const book = books.find(b => b.id === id);
-        editingId = id;
-        document.getElementById('detail-header-title').innerText = book.title;
-        document.getElementById('detail-title').innerText = book.title;
-        document.get
+            return matchCat && 
