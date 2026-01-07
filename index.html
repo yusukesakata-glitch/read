@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>読書記録アプリ</title>
+    <style>
+        :root {
+            --bg-color: #fffaf5;
+            --primary-orange: #e67e22;
+            --green-light: #e8f8f0;
+            --blue-light: #eef2ff;
+            --purple-light: #f5f0ff;
+            --pink-light: #fff0f5;
+            --text-main: #333;
+            --text-sub: #888;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-main);
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ヘッダー */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .add-btn {
+            background-color: var(--primary-orange);
+            color: white;
+            padding: 0 15px;
+            height: 40px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        /* 年間目標 */
+        .goal-card {
+            background-color: var(--green-light);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .goal-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #2d5a27;
+        }
+
+        .progress-bar {
+            background-color: #fff;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background-color: #82e9a8;
+            height: 100%;
+            width: 1%; /* 動的に変更 */
+            transition: width 0.3s;
+        }
+
+        /* 統計グリッド */
+        .stats-grid-top {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid-bottom {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .stat-card.blue { background-color: var(--blue-light); }
+        .stat-card.purple { background-color: var(--purple-light); }
+        .stat-card.pink { background-color: var(--pink-light); }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 5px;
+        }
+
+        /* 検索・ソート */
+        .search-box {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            border: 2px solid #f1c40f;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .sort-select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            background: #f0f0f0;
+            margin-bottom: 15px;
+        }
+
+        .category-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--primary-orange);
+            font-weight: bold;
+        }
+
+        /* 本のリスト表示エリア */
+        .book-list {
+            margin-top: 20px;
+        }
+
+        .book-item {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>読書記録</h1>
+        <div class="header-actions">
+            <button class="icon-btn" style="color: #2ecc71;">🎯</button>
+            <button class="icon-btn" style="color: #9b59b6;">↓</button>
+            <button class="add-btn" onclick="addBook()">＋ 追加</button>
+        </div>
+    </div>
+
+    <div class="goal-card">
+        <div class="goal-info">
+            <span>🎯 年間目標: <span id="target-count">100</span>冊</span>
+            <span id="progress-text">0/100 (0%)</span>
+        </div>
+        <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+        </div>
+    </div>
+
+    <div class="stats-grid-top">
+        <div class="stat-card green" style="background-color: var(--green-light);">
+            <span class="stat-value" id="count-read" style="color: #27ae60;">0</span>
+            <span class="stat-label">読了</span>
+        </div>
+        <div class="stat-card blue">
+            <span class="stat-value" id="count-reading" style="color: #2980b9;">0</span>
+            <span class="stat-label">読書中</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-value" id="count-want" style="color: #34495e;">0</span>
+            <span class="stat-label">読みたい</span>
+        </div>
+    </div>
+
+    <div class="stats-grid-bottom">
+        <div class="stat-card purple">
+            <span class="stat-value" id="total-pages" style="color: #8e44ad;">0</span>
+            <span class="stat-label">総ページ数</span>
+        </div>
+        <div class="stat-card pink">
+            <span class="stat-value" id="count-fav" style="color: #e91e63;">0</span>
+            <span class="stat-label">お気に入り</span>
+        </div>
+    </div>
+
+    <div class="search-box">
+        <span style="position:absolute; left:15px; top:12px;">🔍</span>
+        <input type="text" placeholder="タイトルや著者で検索...">
+    </div>
+
+    <select class="sort-select">
+        <option>登録日順</option>
+        <option>タイトル順</option>
+    </select>
+
+    <div class="category-label">
+        <span>🔖 カテゴリ</span>
+    </div>
+
+    <div id="book-list" class="book-list">
+        </div>
+</div>
+
+<script>
+    // データの初期化
+    let books = JSON.parse(localStorage.getItem('myBooks')) || [];
+
+    function updateDashboard() {
+        const read = books.filter(b => b.status === 'read').length;
+        const reading = books.filter(b => b.status === 'reading').length;
+        const want = books.filter(b => b.status === 'want').length;
+        const totalPages = books.reduce((sum, b) => sum + (parseInt(b.pages) || 0), 0);
+        
+        document.getElementById('count-read').innerText = read;
+        document.getElementById('count-reading').innerText = reading;
+        document.getElementById('count-want').innerText = want;
+        document.getElementById('total-pages').innerText = totalPages;
+
+        // 進捗バー
+        const target = 100;
+        const percent = Math.min((read / target) * 100, 100);
+        document.getElementById('progress-fill').style.width = percent + '%';
+        document.getElementById('progress-text').innerText = `${read}/${target} (${Math.round(percent)}%)`;
+        
+        localStorage.setItem('myBooks', JSON.stringify(books));
+        renderList();
+    }
+
+    function addBook() {
+        const title = prompt("本のタイトルを入力してください");
+        if (!title) return;
+        
+        const status = prompt("状態を入力してください (read: 読了, reading: 読書中, want: 読みたい)", "read");
+        const pages = prompt("ページ数を入力してください", "200");
+
+        books.push({ title, status, pages: parseInt(pages) });
+        updateDashboard();
+    }
+
+    function renderList() {
+        const listDiv = document.getElementById('book-list');
+        listDiv.innerHTML = '';
+        books.slice().reverse().forEach(book => {
+            const item = document.createElement('div');
+            item.className = 'book-item';
+            item.innerHTML = `<span>${book.title}</span><small>${book.status}</small>`;
+            listDiv.appendChild(item);
+        });
+    }
+
+    // 初回表示
+    updateDashboard();
+</script>
+
+</body>
+</html>
